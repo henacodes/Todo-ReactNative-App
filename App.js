@@ -1,20 +1,63 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { useState } from "react"
+import {View, Text, StyleSheet, Image, FlatList, Alert} from "react-native"
+import AddItem from "./components/AddItem"
+// Custom Components
+import Header from "./components/Header"
+import ListItem from "./components/ListItem"
+const App = () =>{
 
-export default function App() {
-  return (
+  const [items, setItems] = useState([
+    {
+      id:1,
+      text:"Milk"
+    },
+    {
+      id:2,
+      text:"Juice"
+    },
+    {
+      id:3,
+      text:"Bread"
+    },
+    {
+      id:4,
+      text:"Fruits"
+    },
+  ])
+
+
+  const deleteItem = (id) =>{
+    return setItems((prevItems) => prevItems.filter(i => i.id != id))
+  }
+  const addItem = (text) =>{
+    if(!text){
+      return Alert.alert("Empty Field", "Please enter an item", [
+        {
+          text:"Ok"
+        }
+      ])
+    }
+    setItems(prevItems => {
+      return [...prevItems, {id:prevItems.length + Math.random() * 10 + Math.random() * 20 , text}]
+    })
+   
+  }
+  return(
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <Header title="Todo Tasks"/>
+      <AddItem addItem={addItem} />
+      <FlatList data={items} renderItem={({item}) => <ListItem item={item} deleteItem={deleteItem} />}/>
+      
     </View>
-  );
+  )
 }
 
+
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  container:{
+    paddingTop:60,
+    margin:0,
+    padding:0
+  }
+})
+export default App
