@@ -17,4 +17,8 @@ then
 
 
 
+You can download the bundled APK right [here][1]
 
+
+
+[1]:https://appsenjoy.com/en/RJUJqyeYdM6agFL/file
